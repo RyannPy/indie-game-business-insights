@@ -12,17 +12,17 @@ def indie_game_data_generate(n_games=500):
         market_cost = np.random.uniform(50, 1000) * 100
         
         # 2. PRICE & QUALITY
-        price_tag = np.random.choice([0, 9.99, 14.99, 19.99, 29.99, 59.99]) # Harga umum game
+        price_tag = np.random.choice([0, 9.99, 14.99, 19.99, 29.99, 59.99])
         
-        # Anggap dev_cost mencerminkan kualitas dasar (makin mahal, makin niat bikinnya)
+        # Anggap dev_cost mencerminkan kualitas dasar
         quality_score = (dev_cost / 300000) * 100 + np.random.normal(0, 10) 
 
         # 3. PLAYER BASE (Tergantung Marketing + Quality + Harga)
-        # Marketing narik orang, Quality bikin mereka stay/viral, Harga mahal ngurangin player
+        # Marketing menarik player, Quality membuat mereka bertahan atau viral, Harga mahal mengurangi player
         base_players = (market_cost * 2) + (quality_score * 50)
         price_penalty = 1 - (price_tag / 100)
         
-        # Tambahkan faktor "Hoki" pake Pareto (biar ada yang meledak/viral)
+        # Ada game yg meledak
         luck_factor = np.random.pareto(1.2) * 5000
         
         player_base = (base_players * price_penalty) + luck_factor
@@ -34,7 +34,7 @@ def indie_game_data_generate(n_games=500):
         # 5. AVG PLAYTIME (Tergantung Quality & Genre/Random)
         avg_playtime = np.random.uniform(1, 40)
         # Kadang ada bot atau glitch (Playtime 999 jam)
-        if np.random.random() < 0.02: # 2% kemungkinan outlier
+        if np.random.random() < 0.02:
             avg_playtime = 999.0
 
         # 6. IS PROFITABLE? (The Logic)
